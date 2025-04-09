@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart File Converter</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #dfe9f3, #ffffff);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: #2d89ef;
+      color: #fff;
+      padding: 2rem 1rem;
+      text-align: center;
+      font-size: 2rem;
+    }
+
+    .converter-card {
+      background: #fff;
+      max-width: 500px;
+      margin: 3rem auto;
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
+    }
+
+    .converter-card h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #333;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    label {
+      font-weight: bold;
+      color: #555;
+    }
+
+    select, input[type="file"], button {
+      padding: 0.75rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      outline: none;
+    }
+
+    button {
+      background-color: #2d89ef;
+      color: white;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #2164b3;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: auto;
+      padding: 1rem;
+      background: #f0f0f0;
+      color: #888;
+    }
+  </style>
+  <script>
+    function detectFileType(event) {
+      const fileInput = event.target;
+      const fileName = fileInput.files[0]?.name || "";
+      const extension = fileName.split('.').pop().toLowerCase();
+
+      const formatMap = {
+        'doc': 'Word (.doc/.docx)', 'docx': 'Word (.doc/.docx)',
+        'ppt': 'PowerPoint (.ppt/.pptx)', 'pptx': 'PowerPoint (.ppt/.pptx)',
+        'xls': 'Excel (.xls/.xlsx)', 'xlsx': 'Excel (.xls/.xlsx)',
+        'jpg': 'Image (.jpg/.png)', 'jpeg': 'Image (.jpg/.png)', 'png': 'Image (.jpg/.png)',
+        'pdf': 'PDF'
+      };
+
+      const detectedFormat = formatMap[extension];
+      const infoBox = document.getElementById("detected-format");
+      if (detectedFormat) {
+        infoBox.textContent = `Detected file type: ${detectedFormat}`;
+        infoBox.style.display = 'block';
+      } else {
+        infoBox.textContent = `File type not recognized`;
+        infoBox.style.display = 'block';
+      }
+    }
+  </script>
+</head>
+<body>
+  <header>
+   File Converter
+  </header>
+
+  <div class="converter-card">
+    <h2>Convert Files Easily</h2>
+    <form action="#" method="post" enctype="multipart/form-data">
+      <div>
+        <label for="file">Select a File</label>
+        <input type="file" id="file" name="file" required onchange="detectFileType(event)">
+        <p id="detected-format" style="display:none; margin-top: 0.5rem; color: #2d89ef;"></p>
+      </div>
+
+      <div>
+        <label for="to">Convert To Format</label>
+        <select id="to" name="to" required>
+          <option value="pdf">PDF</option>
+          <option value="word">Word (.doc/.docx)</option>
+          <option value="powerpoint">PowerPoint (.ppt/.pptx)</option>
+          <option value="excel">Excel (.xls/.xlsx)</option>
+          <option value="image">Image (.jpg/.png)</option>
+        </select>
+      </div>
+
+      <button type="submit">Convert Now</button>
+    </form>
+  </div>
+
+  <footer>
+    &copy; 2025 Smart File Converter. All rights reserved.
+  </footer>
+</body>
+</html>
